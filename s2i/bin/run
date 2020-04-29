@@ -9,3 +9,5 @@ if [ `id -u` -ge 10000 ]; then
     cat /tmp/passwd > /etc/passwd
     rm /tmp/passwd
 fi
+
+exec php -S [::]:8080 -t /var/www/html
