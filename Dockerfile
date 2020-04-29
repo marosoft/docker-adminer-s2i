@@ -3,6 +3,19 @@ FROM adminer
 # Switch to the root user so we can install additional packages.
 USER root
 
+# ORACLE EXTENSION
+RUN apt-get update && apt-get -y install wget bsdtar libaio1 && \
+    wget -qO- https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-basic-linux.x64-19.6.0.0.0dbru.zip | bsdtar -xvf- -C /usr/local && \
+    ln -s /usr/local/instantclient_19_6 /usr/local/instantclient && \
+    # ln -s /usr/local/instantclient/libclntsh.so.* /usr/local/instantclient/libclntsh.so && \
+    ln -s /usr/local/instantclient/lib* /usr/lib && \
+#     ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
+
+RUN echo 'instantclient,/usr/local/instantclient/' | pecl install oci8 \
+    && docker-php-ext-enable oci8 \
+    && docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/usr/local/instantclient \
+    && docker-php-ext-install pdo_oci
+
 # Add labels so OpenShift recognises this as an S2I builder image.
 LABEL io.k8s.description="S2I builder for Adminer (adminer)." \
       io.k8s.display-name="Adminer (adminer)" \
