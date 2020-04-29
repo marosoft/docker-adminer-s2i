@@ -1,0 +1,1 @@
+# docker-adminer-s2i
