@@ -41,7 +41,7 @@ RUN ls -ltra /opt/app-root/s2i/bin/
 # Adjust permissions on /etc/passwd so writable by group root.
 RUN chmod g+w /etc/passwd
 
-ENTRYPOINT	[ "entrypoint.sh", "docker-php-entrypoint", "/opt/app-root/s2i/bin/run" ]
+ENTRYPOINT	[ "/opt/app-root/s2i/bin/run" ]
 
 # Revert the user but set it to be an integer user ID else the S2I build
 # process will reject the builder image as can't tell if user name
