@@ -11,8 +11,6 @@ RUN apk add php7-pear php7-dev gcc musl-dev libnsl libaio &&\
     curl -o /tmp/basic.zip https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-basic-linux.x64-19.6.0.0.0dbru.zip && \
     unzip -d /usr/local/ /tmp/basic.zip && \
     ln -s /usr/local/instantclient_19_6 ${ORACLE_HOME} && \
-    ln -s ${ORACLE_HOME}/libclntsh.so.* ${ORACLE_HOME}/libclntsh.so && \
-    ln -s ${ORACLE_HOME}/libocci.so.* ${ORACLE_HOME}/libocci.so && \
     ln -s /usr/local/instantclient/lib* /usr/lib 
 #     ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
 #     ln -s /usr/lib/libnsl.so.2.0.0  /usr/lib/libnsl.so.1
