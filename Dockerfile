@@ -7,7 +7,7 @@ ENV LD_LIBRARY_PATH /usr/local/instantclient
 ENV ORACLE_HOME /usr/local/instantclient
 
 # ORACLE EXTENSION
-RUN apk add php7-pear php7-dev gcc musl-dev libnsl libaio &&\
+RUN apk add php7-pear php7-dev gcc musl-dev libnsl libaio make &&\
     curl -o /tmp/basic.zip https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-basic-linux.x64-19.6.0.0.0dbru.zip && \
     curl -o /tmp/sdk.zip https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-sdk-linux.x64-19.6.0.0.0dbru.zip && \
     unzip -d /usr/local/ /tmp/basic.zip && \
