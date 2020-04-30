@@ -8,7 +8,7 @@ RUN curl -o /tmp/basic.zip https://download.oracle.com/otn_software/linux/instan
     unzip -d /usr/local/ /tmp/basic.zip && \
     ln -s /usr/local/instantclient_19_6 /usr/local/instantclient && \
     # ln -s /usr/local/instantclient/libclntsh.so.* /usr/local/instantclient/libclntsh.so && \
-    ln -s /usr/local/instantclient/lib* /usr/lib && \
+    ln -s /usr/local/instantclient/lib* /usr/lib
 #     ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
 
 RUN echo 'instantclient,/usr/local/instantclient/' | pecl install oci8 \
