@@ -13,9 +13,9 @@ RUN apk add php7-pear php7-dev gcc musl-dev libnsl libaio &&\
     ln -s /usr/local/instantclient_19_6 ${ORACLE_HOME} && \
     ln -s ${ORACLE_HOME}/libclntsh.so.* ${ORACLE_HOME}/libclntsh.so && \
     ln -s ${ORACLE_HOME}/libocci.so.* ${ORACLE_HOME}/libocci.so && \
-    ln -s /usr/local/instantclient/lib* /usr/lib && \
+    ln -s /usr/local/instantclient/lib* /usr/lib 
 #     ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
-    ln -s /usr/lib/libnsl.so.2.0.0  /usr/lib/libnsl.so.1
+#     ln -s /usr/lib/libnsl.so.2.0.0  /usr/lib/libnsl.so.1
 
 RUN echo "instantclient,${ORACLE_HOME}" | pecl install oci8 \
     && docker-php-ext-enable oci8 \
