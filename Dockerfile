@@ -36,6 +36,8 @@ LABEL io.k8s.description="S2I builder for Adminer (adminer)." \
 COPY s2i /opt/app-root/s2i
 RUN chmod +x /opt/app-root/s2i/bin/*
 
+RUN ls -ltra /opt/app-root/s2i/bin/
+
 # Adjust permissions on /etc/passwd so writable by group root.
 RUN chmod g+w /etc/passwd
 
