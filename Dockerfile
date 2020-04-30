@@ -3,18 +3,27 @@ FROM adminer
 # Switch to the root user so we can install additional packages.
 USER root
 
-# ORACLE EXTENSION
-RUN curl -o /tmp/basic.zip https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-basic-linux.x64-19.6.0.0.0dbru.zip && \
-    unzip -d /usr/local/ /tmp/basic.zip && \
-    ln -s /usr/local/instantclient_19_6 /usr/local/instantclient && \
-    # ln -s /usr/local/instantclient/libclntsh.so.* /usr/local/instantclient/libclntsh.so && \
-    ln -s /usr/local/instantclient/lib* /usr/lib
-#     ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
+ENV LD_LIBRARY_PATH /usr/local/instantclient
+ENV ORACLE_HOME /usr/local/instantclient
 
-RUN echo 'instantclient,/usr/local/instantclient/' | pecl install oci8 \
+# ORACLE EXTENSION
+RUN apk add php7-pear php7-dev gcc musl-dev libnsl libaio &&\
+    curl -o /tmp/basic.zip https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-basic-linux.x64-19.6.0.0.0dbru.zip && \
+    unzip -d /usr/local/ /tmp/basic.zip && \
+    ln -s /usr/local/instantclient_19_6 ${ORACLE_HOME} && \
+    ln -s ${ORACLE_HOME}/libclntsh.so.* ${ORACLE_HOME}/libclntsh.so && \
+    ln -s ${ORACLE_HOME}/libocci.so.* ${ORACLE_HOME}/libocci.so && \
+    ln -s /usr/local/instantclient/lib* /usr/lib && \
+#     ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
+    ln -s /usr/lib/libnsl.so.2.0.0  /usr/lib/libnsl.so.1
+
+RUN echo "instantclient,${ORACLE_HOME}" | pecl install oci8 \
     && docker-php-ext-enable oci8 \
     && docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/usr/local/instantclient \
     && docker-php-ext-install pdo_oci
+    
+RUN apk del php7-pear php7-dev gcc musl-dev && \
+    rm -rf /tmp/*.zip /var/cache/apk/* /tmp/pear/
 
 # Add labels so OpenShift recognises this as an S2I builder image.
 LABEL io.k8s.description="S2I builder for Adminer (adminer)." \
