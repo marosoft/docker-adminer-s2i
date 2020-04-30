@@ -47,7 +47,4 @@ RUN chmod g+w /etc/passwd
 
 USER 1000
 
-# Override command to startup Adminer. The original is wrapped
-# so we can set an environment variable for notebook password.
-
-CMD [ "/opt/app-root/s2i/bin/run" ]
+ENTRYPOINT	[ "/opt/app-root/s2i/bin/run", "entrypoint.sh", "docker-php-entrypoint" ]
