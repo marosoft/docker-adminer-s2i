@@ -1,5 +1,0 @@
-#!/bin/bash
-
-set -eo pipefail
-
-exec /usr/local/bin/entrypoint.sh docker-php-entrypoint
