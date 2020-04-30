@@ -4,7 +4,7 @@ FROM adminer
 USER root
 
 # ORACLE EXTENSION
-RUN wget -q https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-basic-linux.x64-19.6.0.0.0dbru.zip | unzip -d /usr/local && \
+RUN wget -q -O - https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-basic-linux.x64-19.6.0.0.0dbru.zip | unzip -d /usr/local && \
     ln -s /usr/local/instantclient_19_6 /usr/local/instantclient && \
     # ln -s /usr/local/instantclient/libclntsh.so.* /usr/local/instantclient/libclntsh.so && \
     ln -s /usr/local/instantclient/lib* /usr/lib && \
