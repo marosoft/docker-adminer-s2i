@@ -47,4 +47,4 @@ RUN chmod g+w /etc/passwd
 
 USER 1000
 
-ENTRYPOINT	[ "/opt/app-root/s2i/bin/run", "entrypoint.sh", "docker-php-entrypoint" ]
+ENTRYPOINT	[ "entrypoint.sh", "docker-php-entrypoint", "/opt/app-root/s2i/bin/run" ]
