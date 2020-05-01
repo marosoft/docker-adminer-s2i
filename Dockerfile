@@ -2,6 +2,7 @@ FROM adminer
 
 # Switch to the root user so we can install additional packages.
 USER root
+ARG S2IDIR="/home/s2i"
 
 ENV LD_LIBRARY_PATH /usr/local/instantclient
 ENV ORACLE_HOME /usr/local/instantclient
@@ -30,30 +31,34 @@ LABEL io.k8s.description="S2I builder for Adminer (adminer)." \
       io.k8s.display-name="Adminer (adminer)" \
       io.openshift.expose-services="8080:http" \
       io.openshift.tags="builder,adminer,php" \
-      io.openshift.s2i.destination="/tmp/s2i" \
-      io.openshift.s2i.scripts-url="image:///tmp/s2i" \
-      io.s2i.scripts-url="image:///tmp/s2i"
+      io.openshift.s2i.scripts-url="image://$S2IDIR/bin"
+#       io.openshift.s2i.destination="/tmp/s2i" \
+#       io.openshift.s2i.scripts-url="image:///tmp/s2i" \
+#       io.s2i.scripts-url="image:///tmp/s2i"
 
 # Copy in S2I builder scripts
-COPY s2i/bin /tmp/s2i
-RUN chmod +x /tmp/s2i/*
-
-RUN ls -ltra /tmp/s2i/
+COPY s2i $S2IDIR
+RUN chmod 777 -R $S2IDIR
 
 # Adjust permissions on /etc/passwd so writable by group root.
 RUN chmod g+w /etc/passwd
 
 # Adjust permissions on home directory so writable by group root.
+RUN	addgroup -S 1001 \
+&&	adduser -S -G 1001 1001 \
+&&	mkdir -p /var/www/html \
+&&	mkdir -p /var/www/html/plugins-enabled \
+&&	chown -R 1001:1001 /var/www/html
 
-RUN chgrp -Rf root /var/www/html && chmod -Rf g+w /var/www/html
+WORKDIR /var/www/html
 
 # Revert the user but set it to be an integer user ID else the S2I build
 # process will reject the builder image as can't tell if user name
 # really maps to user ID for root.
 
-USER 1000
+USER 1001
 
 RUN echo "user"
 
-CMD	[ "/tmp/s2i/run" ]
+CMD ["$S2IDIR/bin/run"]
 
