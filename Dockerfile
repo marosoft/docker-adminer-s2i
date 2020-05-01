@@ -30,6 +30,7 @@ LABEL io.k8s.description="S2I builder for Adminer (adminer)." \
       io.k8s.display-name="Adminer (adminer)" \
       io.openshift.expose-services="8080:http" \
       io.openshift.tags="builder,adminer,php" \
+      io.openshift.s2i.destination="/tmp/s2i" \
       io.openshift.s2i.scripts-url="image:///tmp/s2i" \
       io.s2i.scripts-url="image:///tmp/s2i"
 
