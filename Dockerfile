@@ -42,6 +42,10 @@ RUN ls -ltra /usr/local/s2i/repository/
 # Adjust permissions on /etc/passwd so writable by group root.
 RUN chmod g+w /etc/passwd
 
+# Adjust permissions on home directory so writable by group root.
+
+RUN chgrp -Rf root /var/www/html && chmod -Rf g+w /var/www/html
+
 # Revert the user but set it to be an integer user ID else the S2I build
 # process will reject the builder image as can't tell if user name
 # really maps to user ID for root.
