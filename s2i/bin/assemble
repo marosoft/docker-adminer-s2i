@@ -4,4 +4,6 @@ set -eo pipefail
 
 echo "Before assemble"
 
+cd /var/www/html
+
 exec /usr/local/bin/entrypoint.sh echo "ok"
