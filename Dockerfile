@@ -46,8 +46,6 @@ RUN chmod g+w /etc/passwd
 # Adjust permissions on home directory so writable by group root.
 RUN	addgroup -S 1001 \
 &&	adduser -S -G 1001 1001 \
-&&	mkdir -p /var/www/html \
-&&	mkdir -p /var/www/html/plugins-enabled \
 &&	chown -R 1001:1001 /var/www/html
 
 WORKDIR /var/www/html
