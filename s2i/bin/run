@@ -14,4 +14,6 @@ echo "pswd changed"
 
 echo "$@"
 
-exec "$@"
+exec php -S [::]:8080 -t /var/www/html
+
+# exec "$@"
