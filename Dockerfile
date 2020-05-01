@@ -30,14 +30,14 @@ LABEL io.k8s.description="S2I builder for Adminer (adminer)." \
       io.k8s.display-name="Adminer (adminer)" \
       io.openshift.expose-services="8080:http" \
       io.openshift.tags="builder,adminer,php" \
-      io.openshift.s2i.destination="/usr/local/s2i/repository" \
-      io.openshift.s2i.scripts-url="image:///usr/local/s2i"
+      io.openshift.s2i.scripts-url="image:///usr/local/s2i" \
+      io.s2i.scripts-url="image:///usr/local/s2i"
 
 # Copy in S2I builder scripts
-COPY s2i/bin /usr/local/s2i/repository
-RUN chmod +x /usr/local/s2i/repository/*
+COPY s2i/bin /usr/local/s2i
+RUN chmod +x /usr/local/s2i/*
 
-RUN ls -ltra /usr/local/s2i/repository/
+RUN ls -ltra /usr/local/s2i/
 
 # Adjust permissions on /etc/passwd so writable by group root.
 RUN chmod g+w /etc/passwd
